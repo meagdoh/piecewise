@@ -1,3 +1,12 @@
 Flask>=0.10.1,<0.11
 sqlalchemy>=1.0,<1.1
 geoalchemy2>=0.2,<0.3
+
+
+map_coordinate_southwest:
+  lat:  45.387483
+  lon:   9.065621
+
+map_coordinate_northeast:
+  lat: 9.311073
+  lon: 45.544709
