@@ -24,32 +24,32 @@ piecewise_commit: master
 git_repo: "{{ remote }}/{{ project_name }}.git"
 
 # BigQuery Project Number or Project Name
-bigquery_project_num: 
+bigquery_project_num:
 
-# Your Postgres database name and user can be customized if necessary.  
+# Your Postgres database name and user can be customized if necessary.
 database_name: piecewise
 database_user: postgres
 database_user_group: postgres
 
-# site_fqdn should contain either: 
-#   - the fully qualified domain name of your production server 
+# site_fqdn should contain either:
+#   - the fully qualified domain name of your production server
 #   - the IP address of your development or production server
 #
 # Typically we use IP address for development, either on a server/VM on our LAN
-# or a development server/VM on a cloud service like Linode, GCE, Amazon, etc. 
+# or a development server/VM on a cloud service like Linode, GCE, Amazon, etc.
 #
 # For production installs we usually use the server's fqdn once we have it configured
-# in DNS.  
+# in DNS.
 site_fqdn: <IP or domain name>
 
-# The variables below will be used to generate SSL certificates. When deploying to 
-# development hosts, the country, state and city are used by open SSL to generate a 
-# self-signed certificate. This is useful when you don't have an DNS name set up yet 
-# and want to deploy using the host's IP address, or to a server not accessible to 
-# the Internet. 
+# The variables below will be used to generate SSL certificates. When deploying to
+# development hosts, the country, state and city are used by open SSL to generate a
+# self-signed certificate. This is useful when you don't have an DNS name set up yet
+# and want to deploy using the host's IP address, or to a server not accessible to
+# the Internet.
 #
-# When deploying to a production host. The site_contact and the site_fqdn variables are 
-# used by EFF's certbot tool to automate the request for valid SSL certificates from 
+# When deploying to a production host. The site_contact and the site_fqdn variables are
+# used by EFF's certbot tool to automate the request for valid SSL certificates from
 # the LetsEncrypt CA.
 site_contact: <email@your.org.com>
 site_country: <two letter county>
@@ -61,7 +61,7 @@ site_ou: <name of your organization>
 self_signed_ssl_cert_path: /etc/ssl/certs/selfsigned.{{ site_fqdn }}.cert
 self_signed_ssl_key_path: /etc/ssl/private/selfsigned.{{ site_fqdn }}.key
 
-# If we're deploying to production, we'll use LetsEncrypt certs instead. 
+# If we're deploying to production, we'll use LetsEncrypt certs instead.
 letsencrypt_ssl_cert_path: /etc/letsencrypt/live/{{ site_fqdn }}/fullchain.pem
 letsencrypt_ssl_key_path: /etc/letsencrypt/live/{{ site_fqdn }}/privkey.pem
 
@@ -69,7 +69,7 @@ letsencrypt_ssl_key_path: /etc/letsencrypt/live/{{ site_fqdn }}/privkey.pem
 # DEPLOYMENT FILE LOCATIONS
 ########
 
-# These paths specify where specific components will be deployed. 
+# These paths specify where specific components will be deployed.
 # These can be largely unchanged, unless your system requires different paths.
 
 # Where the base files from your repo will be copied on the remote server.
@@ -114,20 +114,20 @@ layer_name: seattle_blkgrpce10
 aggregation_name: "by_census_block"
 aggregation_stats_table_name: "block_statistics"
 
-# Define the latitude and longitude for the southwest and northeast corners of a bounding 
+# Define the latitude and longitude for the southwest and northeast corners of a bounding
 # box, defining the region where you are interested in pulling M-Lab NDT data.
-map_coordinate_southwest: 
+map_coordinate_southwest:
   lat: 47.3630134401
   lon: -122.6733398438
 
-map_coordinate_northeast: 
+map_coordinate_northeast:
   lat: 47.8076208172
   lon: -121.9509887695
 
 # The four variable below are derived from your bounding box coordinates above.
 map_bounding_box: "{{ map_coordinate_southwest.lon }},{{ map_coordinate_southwest.lat }},{{ map_coordinate_northeast.lon }},{{ map_coordinate_northeast.lat }}"
 
-# The two dates below define the date range for M-Lab NDT test data. 
+# The two dates below define the date range for M-Lab NDT test data.
 #
 # For a production server deployment, it is advisable to set 'map_data_data_end_date'
 # to a date well in the future, for example: "Dec 31 2050 00:00:00".
@@ -143,14 +143,14 @@ map_data_end_date: "Mar 13 2017 00:00:00"
 # The section below defines variables to be used on the website map.
 
 # Piecewise requires a topojson file for the website to use. This topojson file must
-# be created from the shapefile you defined above. 
+# be created from the shapefile you defined above.
 # Save your topojson file into the folder /local_customizations/geofiles
 # and then enter its filename here.
-topojson_file: seattle_census10_blockgroups.topojson
+topojson_file: ITA_adm1.json
 
-# 'geoKey' is the field name in your topojson file which corresponds to the unique key 
+# 'geoKey' is the field name in your topojson file which corresponds to the unique key
 # in your shapefile, and is typically the same as dbKey, but in CAPITAL LETTERS.
-geoKey: GEOID10
+geoKey: ID112
 
 # 'mapscript_start_year' is the first year you are interested in showing in the year dropdown
 # 'mapscript_start_month' lets you define the order of months in the UI.
@@ -158,7 +158,7 @@ mapscript_start_year: 2016
 mapscript_start_month: 1
 
 # 'mapscript_base_layer' defines the type of base layer to be used on the map.
-# Either Mapbox.com or OpenStreetMaps base layers are supported. 
+# Either Mapbox.com or OpenStreetMaps base layers are supported.
 #
 # Set mapscript_base_layer to either: 'mapbox' OR 'osm'
 mapscript_base_layer: osm
@@ -171,29 +171,29 @@ mapscript_osm_api_url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 # If you are using a Mapbox base layer, set the API URL for your Mapbox tiles here.
 mapscript_mapbox_api_url: ""
 
-# 'mapscript_min_data_points' allows you to set a minimum number of tests which must be 
-# present in any aggregate area defined by your shapefile in order to be displayed on the 
-# aggregate website map. 
+# 'mapscript_min_data_points' allows you to set a minimum number of tests which must be
+# present in any aggregate area defined by your shapefile in order to be displayed on the
+# aggregate website map.
 mapscript_min_data_points: 5
 
 # 'mapscript_zoom_level' sets the initial zoom level for the map
 mapscript_zoom_level: 11
 
-# These variables name the map layers on the website. 'mapscript_layer_name' is used as 
-# a layer name in the JavaScript code, and 'mapscript_layer_name_pretty' is used in the 
+# These variables name the map layers on the website. 'mapscript_layer_name' is used as
+# a layer name in the JavaScript code, and 'mapscript_layer_name_pretty' is used in the
 # UI if the layer controls are displayed for the user. By default, Piecewise will deploy
 # with one layer, and will not show the layer controls.
 mapscript_layer_name: "census_block_groups"
 mapscript_layer_name_pretty: "Census block groups"
 
 # In the future, support for other types of geo data, such as the geojson format may be
-# included in Piecewise. Currently, the mapscript json type should always be 'topojson'. 
+# included in Piecewise. Currently, the mapscript json type should always be 'topojson'.
 mapscript_json_type: "topojson"
 
 
-# This dictionary of month names/abbreviations lets you configure how month names appear 
-# on the website map controls. 
-mapscript_month_names: 
+# This dictionary of month names/abbreviations lets you configure how month names appear
+# on the website map controls.
+mapscript_month_names:
   1: Jan
   2: Feb
   3: Mar
@@ -238,7 +238,7 @@ form_fields:
       db_type: String
       name: other_isp
       id: other_isp
-      text: "If your ISP is not listed, please enter it here: " 
+      text: "If your ISP is not listed, please enter it here: "
       required: no
   3:
     connection_type:
@@ -264,7 +264,7 @@ form_fields:
       name: cost_of_service
       id: cost_of_service
       text: "How much do you pay, per month?"
-      options: 
+      options:
         1:
           default: "------"
         2:
@@ -305,22 +305,21 @@ form_fields:
 # The section below allows you to customize various text and other elements of the website
 
 # 'site_name' is used as the HTML page title element
-site_name: "Seattle Broadband Map"
+site_name: "Italy Broadband Map"
 
 # 'intro_text' defines the heading text that precedes the HTML survey form, provided to users
 # before they may take the test.
 intro_text: >
-  The City of Seattle is collecting information from residents about broadband 
-  experiences across the City. To contribute, please answer the following 
+  The Country of Italy is collecting information from residents about broadband
+  experiences across the City. To contribute, please answer the following
   questions and then take our Broadband Speed Test:
 
 # 'consent_message' defines the message displayed next to the consent checkbox
 consent_message: >
-  I understand that the data collected from this test will be anonymized and aggregated 
-  for publication to the Broadband Map and 
-  <a href="https://data.seattle.gov" target="_blank">Data.Seattle.Gov</a>.
+  I understand that the data collected from this test will be anonymized and aggregated
+  for publication to the Broadband Map and == this is a test account.
 
-# The variables below define the messages and labels provided to the user before and 
+# The variables below define the messages and labels provided to the user before and
 # after the test.
 run_test_heading: "Test your speed!"
 test_result_heading: "Your test results"
@@ -336,9 +335,9 @@ thank_you_message: >
 
 # 'next_action_' variables define the action items present to the user after they run the test.
 next_action_message: "What do you want to do next?"
-next_action_show_map_text: "View all results to-date on a map of Seattle"
+next_action_show_map_text: "View all results to-date on a map of Italy"
 next_action_learn_about_text: "Learn more about this test and how to improve your speed"
-next_action_learn_about_link: "https://www.seattle.gov/broadband-speed-test-about"
+next_action_learn_about_link: "###"
 next_action_social_share_text: "Share this test with your friends, colleagues, and neighbors"
 
 # 'social_share_' variables define the links to be used for social sharing actions.
@@ -370,7 +369,7 @@ mapview_icon_test_alt_text: "Take the Speed Test"
 mapview_icon_learn_alt_text: "Learn more about this test."
 mapview_icon_learn_link: "http://www.seattle.gov/broadband/broadband-speed-test/about-the-broadband-speed-test"
 
-# The two varables below control where Leaflet map controls are placed in the UI. 
+# The two varables below control where Leaflet map controls are placed in the UI.
 # They should remain unchanged for now. More work on positioning for Leaflet elements will follow.
 mapcontrols_zoom_pos: topright
 mapcontrols_legend_pos: bottomleft
